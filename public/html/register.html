@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Register | Inventory System</title>
+        <link rel="stylesheet" href="../Css/style.css" />
+    </head>
+    <body>
+        <section class="register-form-container">
+            <h2>Register</h2>
+            <form id="register-form">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter username"
+                    required
+                />
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter password"
+                    required
+                />
+                <label for="role">Role</label>
+                <select id="role" name="role">
+                    <option value="Staff">Staff</option>
+                    <option value="Admin">Admin</option>
+                </select>
+                <button type="submit">Register</button>
+            </form>
+            <p id="register-message"></p>
+            <p>
+                Already have an account?
+                <a href="login.html">Login</a>
+            </p>
+        </section>
+
+        <script type="module" src="../js/register.js"></script>
+    </body>
+</html>

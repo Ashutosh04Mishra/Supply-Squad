@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Login | Inventory System</title>
+        <link rel="stylesheet" href="../Css/style.css" />
+    </head>
+    <body>
+        <section class="login-form-container">
+            <h2>Login</h2>
+            <form id="login-form">
+                <label for="username">Username</label>
+                <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    placeholder="Enter username"
+                    required
+                />
+                <label for="password">Password</label>
+                <input
+                    type="password"
+                    id="password"
+                    name="password"
+                    placeholder="Enter password"
+                    required
+                />
+                <button type="submit">Login</button>
+            </form>
+            <p id="login-message"></p>
+            <p>
+                Don't have an account?
+                <a href="register.html">Register</a>
+            </p>
+        </section>
+        <script type="module" src="../js/login.js"></script>
+    </body>
+</html>

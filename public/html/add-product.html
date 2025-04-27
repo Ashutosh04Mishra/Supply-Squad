@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Add Product | Inventory System</title>
+        <link rel="stylesheet" href="../Css/style.css" />
+    </head>
+    <body>
+        <div class="dashboard-layout">
+            <aside class="dashboard-sidebar">
+                <h1>IMS</h1>
+                <ul class="nav-links">
+                    <li><a href="index.html">Dashboard</a></li>
+                    <!-- <li><a href="products.html">Products</a></li> -->
+                    <li><a href="low-stock.html">Low Stock</a></li>
+                    <li><a href="add-product.html">Add Product</a></li>
+                     <li><a href="sales.html">Sales</a></li>
+                    <!-- <li><a href="stock-history.html">Stock History</a></li> -->
+                    <li><a href="sales-report.html">Sales Report</a></li>
+                </ul>
+                <div class="auth-links">
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Register</a>
+                </div>
+                <a id="logout-btn" href="#">Logout</a>
+            </aside>
+            <main class="dashboard-content">
+                <section class="form-container">
+                    <h2>Add Product</h2>
+                    <form id="add-product-form">
+                        <label for="name">Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            name="name"
+                            placeholder="Enter product name"
+                            required
+                        />
+                        <label for="category">Category</label>
+                        <input
+                            type="text"
+                            id="category"
+                            name="category"
+                            placeholder="Enter product category"
+                            required
+                        />
+                        <label for="quantity">Quantity</label>
+                        <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            placeholder="Enter product quantity"
+                            required
+                            min="0"
+                        />
+                        <label for="price">Price</label>
+                        <input
+                            type="number"
+                            id="price"
+                            name="price"
+                            placeholder="Enter product price"
+                            required
+                            min="0"
+                            step="0.01"
+                        />
+                        <label for="reorder_level">Reorder Level</label>
+                        <input
+                            type="number"
+                            id="reorder_level"
+                            name="reorder_level"
+                            placeholder="Enter reorder level"
+                            required
+                            min="0"
+                        />
+                        <button type="submit">Add Product</button>
+                    </form>
+                    <p id="add-product-message"></p>
+                </section>
+            </main>
+        </div>
+        <script type="module" src="../js/add-product.js"></script>
+    </body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Dashboard | Inventory System</title>
+        <link rel="stylesheet" href="../Css/style.css" />
+    </head>
+    <body>
+        <div class="dashboard-layout">
+            <aside class="dashboard-sidebar">
+                <h1>IMS</h1>
+                <ul class="nav-links">
+                    <li><a href="index.html">Dashboard</a></li>
+                    <!-- <li><a href="products.html">Products</a></li> -->
+                    <li><a href="low-stock.html">Low Stock</a></li>
+                    <li><a href="add-product.html">Add Product</a></li>
+                    <li><a href="sales.html">Sales</a></li>
+                    <!-- <li><a href="stock-history.html">Stock History</a></li> -->
+                    <li><a href="sales-report.html">Sales Report</a></li>
+                </ul>
+                <div class="auth-links">
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Register</a>
+                </div>
+                <a id="logout-btn" href="#">Logout</a>
+            </aside>
+            <main class="dashboard-content">
+                <div class="dashboard-cards">
+                    <div class="card">
+                        <h3>Total Products</h3>
+                        <p id="total-products-count">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Total Stock</h3>
+                        <p id="total-stock-quantity">0</p>
+                    </div>
+                    <div class="card">
+                        <h3>Sales Today</h3>
+                        <p id="sales-today">0</p>
+                    </div>
+                </div>
+                <section class="product-list">
+                    <h2>Products</h2>
+                    <div class="search-filter-bar">
+                        <select id="category-filter">
+                            <option value="">All Categories</option>
+                        </select>
+                    </div>
+                    <table id="product-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Category</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </section>
+            </main>
+        </div>
+        <script type="module" src="../js/index.js"></script>
+    </body>
+</html>

@@ -1,0 +1,9 @@
+# Node modules - never commit this
+node_modules/
+
+# Environment variables - contains secrets like DB passwords
+.env
+
+# Optional: logs
+*.log
+logs/

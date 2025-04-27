@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Edit Product | Inventory System</title>
+        <link rel="stylesheet" href="../Css/style.css" />
+    </head>
+    <body>
+        <div class="dashboard-layout">
+            <aside class="dashboard-sidebar">
+                <h1>IMS</h1>
+                <ul class="nav-links">
+                    <li><a href="index.html">Dashboard</a></li>
+                    <!-- <li><a href="products.html">Products</a></li> -->
+                    <li><a href="low-stock.html">Low Stock</a></li>
+                    <li><a href="add-product.html">Add Product</a></li>
+                     <li><a href="sales.html">Sales</a></li>
+                    <!-- <li><a href="stock-history.html">Stock History</a></li> -->
+                    <li><a href="sales-report.html">Sales Report</a></li>
+                </ul>
+                <div class="auth-links">
+                    <a href="login.html">Login</a>
+                    <a href="register.html">Register</a>
+                </div>
+                <a id="logout-btn" href="#">Logout</a>
+            </aside>
+            <main class="dashboard-content">
+                <section class="form-container">
+                    <h2>Edit Product</h2>
+                    <form id="edit-product-form">
+                        <label for="name">Name</label>
+                        <input
+                            type="text"
+                            id="name"
+                            placeholder="Enter product name"
+                            required
+                        />
+                        <label for="category">Category</label>
+                        <input
+                            type="text"
+                            id="category"
+                            placeholder="Enter product category"
+                            required
+                        />
+                        <label for="quantity">Quantity</label>
+                        <input
+                            type="number"
+                            id="quantity"
+                            placeholder="Enter product quantity"
+                            required
+                        />
+                        <label for="price">Price</label>
+                        <input
+                            type="number"
+                            id="price"
+                            placeholder="Enter product price"
+                            required
+                        />
+                        <label for="reorder_level">Reorder Level</label>
+                        <input
+                            type="number"
+                            id="reorder_level"
+                            placeholder="Enter reorder level"
+                            required
+                        />
+                        <button type="submit">Update Product</button>
+                    </form>
+                    <p id="edit-product-message" class="info-message"></p>
+                </section>
+            </main>
+        </div>
+        <script type="module" src="/js/edit-product.js"></script>
+    </body>
+</html>
