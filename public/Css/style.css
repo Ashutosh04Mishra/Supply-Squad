@@ -39,7 +39,7 @@ p {
 }
 
 .dashboard-sidebar {
-  background-color: #34495e;
+  background-color: rgb(24,11,57);
   color: white;
   width: 250px;
   padding: 20px;
@@ -91,13 +91,15 @@ p {
 #logout-btn {
   display: none; /* Hidden by default */
   padding: 10px 20px;
-  background-color: #e74c3c;
+  background-color: purple;
   color: white;
   text-decoration: none;
   border-radius: 5px;
   margin: 20px;
   text-align: center;
+  cursor: pointer;
 }
+
 
 /* Low stock styling */
 .low-stock {
@@ -124,7 +126,20 @@ p {
 #logout-btn:hover {
   background-color: #c0392b;
 }
-
+#dashboard{
+  background: radial-gradient(
+    circle at center,
+    #644678 0%,    /* Soft light indigo/blue center */
+    #623f89 40%,    /* Deeper blue-violet */
+    rgb(63,31,105) 80%,      /* Very dark navy blue */
+    rgb(24,11,57) 100%      /* Almost black, still bluish */
+  ),
+  linear-gradient(
+    135deg,
+    rgba(17, 20, 40, 1) 0%,
+    rgba(10, 10, 20, 1) 100%
+  );
+}
 .dashboard-content {
   flex: 1;
   padding: 20px;
@@ -329,18 +344,42 @@ p {
   border: 1px solid #2ecc71;
 }
 
+#login{
+  background: url("/Supply-Squad/assets/loginBackground.jpg") no-repeat center center;
+  overflow: hidden;
+  background-size: cover;
+}
 .login-form-container {
-  background-color: white;
-  padding: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   max-width: 400px;
+  width: 400px;
   margin: 100px auto;
+
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  padding: 3rem 2rem;
+  text-align: center;
+  color: white;
+  animation: floatIn 1.5s ease forwards;
+}
+@keyframes floatIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px) scale(0.8);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .login-form-container h2 {
   text-align: center;
   margin-bottom: 20px;
+  color: white;
 }
 
 .login-form-container form {
@@ -362,7 +401,7 @@ p {
 
 .login-form-container button {
   padding: 10px 20px;
-  background-color: #3498db;
+  background-color: #973cdc;
   color: white;
   border: none;
   border-radius: 5px;
@@ -373,7 +412,7 @@ p {
 }
 
 .login-form-container button:hover {
-  background-color: #217dbb;
+  background-color: #cd7bfc;
 }
 
 .login-form-container p {
@@ -381,18 +420,31 @@ p {
   text-align: center;
 }
 
+#register{
+  /*background: url("https://img.freepik.com/free-vector/abstract-background_23-2148499378.jpg?t=st=1745904449~exp=1745908049~hmac=ffb24d2bc9e0c0dc3e7e595e0af667");*/
+  background: url("/Supply-Squad/assets/loginBackground.jpg") no-repeat center center;
+  overflow: hidden;
+  background-size: cover;
+}
 .register-form-container {
   max-width: 400px;
-  margin: 50px auto;
-  padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  margin: 20px auto;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
+  padding: 3rem 2rem;
+  text-align: center;
+  color: white;
+  animation: floatIn 1.5s ease forwards;
 }
 
 .register-form-container h2 {
   text-align: center;
-  color: #333;
+  color: white;
   margin-bottom: 20px;
 }
 
@@ -404,7 +456,6 @@ p {
 
 .register-form-container label {
   font-weight: bold;
-  color: #555;
 }
 
 .register-form-container input,
@@ -416,18 +467,19 @@ p {
 }
 
 .register-form-container button {
-  padding: 12px;
-  background-color: #4CAF50;
+  padding:10px 12px;
+  background-color: #973cdc;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
-  font-weight: bold;
+  align-self: center;
+  width: 200px;
 }
 
 .register-form-container button:hover {
-  background-color: #45a049;
+  background-color: #cd7bfc;
 }
 
 #register-message {
@@ -439,10 +491,11 @@ p {
 .register-form-container p {
   text-align: center;
   margin-top: 15px;
+  color: white;
 }
 
 .register-form-container a {
-  color: #4CAF50;
+  color: #cd7bfc;
   text-decoration: none;
   font-weight: bold;
 }
