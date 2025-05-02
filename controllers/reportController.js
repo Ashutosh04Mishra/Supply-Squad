@@ -21,6 +21,10 @@ export const getStockHistory = async (req, res) => {
 
 export const getSalesSummary = async (req, res) => {
     try {
+        // Get the user ID from the authenticated request
+        const userId = req.user.id;
+        
+        // Filter sales by the current user's ID
         const salesSummary = await Sale.findAll({
             attributes: [
                 [sequelize.fn('SUM', sequelize.col('Sale.quantity')), 'totalQuantitySold'],
@@ -31,6 +35,9 @@ export const getSalesSummary = async (req, res) => {
                 { model: Product, as: 'product', attributes: ['name'] },
                 { model: User, as: 'user', attributes: ['username'] }
             ],
+            where: {
+                userId: userId // Only include sales for the current user
+            },
             group: ['Sale.productId', 'product.id', 'product.name', 'user.id', 'user.username'],
             order: [[sequelize.literal('totalRevenue'), 'DESC']],
         });
