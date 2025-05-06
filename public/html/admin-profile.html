@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>User Profile | Inventory System</title>
+    <link rel="stylesheet" href="../Css/style.css" />
+    <link rel="stylesheet" href="../Css/staff-styles.css" />
+</head>
+<body>
+    <div class="dashboard-layout">
+        <aside class="dashboard-sidebar">
+            <h1>IMS</h1>
+            <ul class="nav-links">
+                <li><a href="index.html">Dashboard</a></li>
+                <li><a href="low-stock.html">Low Stock</a></li>
+                <li><a href="add-product.html" id="add-product-link">Add Product</a></li>
+                <li><a href="sales.html">Sales</a></li>
+                <li><a href="sales-report.html">Sales Report</a></li>
+                <li><a href="admin-profile.html" id="profile-link" class="active">Profile</a></li>
+            </ul>
+            <div class="auth-links">
+                <a href="login.html">Login</a>
+                <a href="register.html">Register</a>
+            </div>
+            <a id="logout-btn" href="#">Logout</a>
+        </aside>
+        <main class="dashboard-content">
+            <h2 id="profile-title">User Profile</h2>
+            
+            <div class="profile-info">
+                <div class="profile-header">
+                    <div class="profile-picture-container">
+                        <div class="profile-picture" id="profile-picture">
+                            <img id="display-picture" src="../images/default-avatar.png" alt="Profile Picture">
+                        </div>
+                        <div class="profile-picture-upload">
+                            <label for="profile-pic-upload" class="upload-btn">Choose Image</label>
+                            <input type="file" id="profile-pic-upload" accept="image/*">
+                        </div>
+                    </div>
+                    
+                    <div id="user-info">
+                        <p><strong>Username:</strong> <span id="username"></span></p>
+                        <p><strong>Role:</strong> <span id="user-role"></span></p>
+                    </div>
+                </div>
+                
+                <div id="admin-info" class="admin-only">
+                    <h3>Personal Information</h3>
+                    <div class="personal-info-form">
+                        <div class="form-group">
+                            <label for="full-name">Full Name</label>
+                            <input type="text" id="full-name" placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="age">Age</label>
+                            <input type="number" id="age" placeholder="Enter your age">
+                        </div>
+                        <div class="form-group">
+                            <label for="address">Address</label>
+                            <textarea id="address" placeholder="Enter your address"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone</label>
+                            <input type="tel" id="phone" placeholder="Enter your phone number">
+                        </div>
+                        <button type="button" id="save-profile" class="btn">Save Information</button>
+                    </div>
+                    
+                    <div id="document-preview" class="document-preview">
+                        <h3>Document Preview</h3>
+                        <div class="document-actions">
+                            <button type="button" id="print-document" class="btn print-btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16" style="margin-right: 5px;"><path d="M2.5 8a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z"/><path d="M5 1a2 2 0 0 0-2 2v2H2a2 2 0 0 0-2 2v3a2 2 0 0 0 2 2h1v1a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2v-1h1a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-1V3a2 2 0 0 0-2-2H5zM4 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2H4V3zm1 5a2 2 0 0 0-2 2v1H2a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v-1a2 2 0 0 0-2-2H5zm7 2v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1z"/></svg>Print Document</button>
+                        </div>
+                        <div id="document-content" class="document-content">
+                            <div class="document-header">
+                                <h2>Personal Information Document</h2>
+                                <p class="document-date">Date: <span id="document-date"></span></p>
+                            </div>
+                            <div class="document-body">
+                                <p><strong>Full Name:</strong> <span id="doc-full-name">-</span></p>
+                                <p><strong>Age:</strong> <span id="doc-age">-</span></p>
+                                <p><strong>Address:</strong> <span id="doc-address">-</span></p>
+                                <p><strong>Email:</strong> <span id="doc-email">-</span></p>
+                                <p><strong>Phone:</strong> <span id="doc-phone">-</span></p>
+                            </div>
+                            <div class="document-footer">
+                                <p>This document was generated by the Inventory Management System.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="staff-actions" class="staff-only">
+                    <h3>Staff Actions</h3>
+                    <p>As a staff member, you can:</p>
+                    <ul>
+                        <li>View all products</li>
+                        <li>Create sales</li>
+                        <li>View low stock items</li>
+                        <li>View sales reports</li>
+                    </ul>
+                </div>
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('Admin profile page loaded');
+            // Get user information from localStorage
+            const token = localStorage.getItem('token');
+            const userRole = localStorage.getItem('userRole');
+            const username = localStorage.getItem('username') || 'User';
+            
+            console.log('User role:', userRole);
+            console.log('Username:', username);
+            
+            // Update profile information
+            document.getElementById('username').textContent = username;
+            document.getElementById('user-role').textContent = userRole || 'Unknown';
+            
+            // Load saved profile data if available
+            loadProfileData();
+            
+            // Update title based on role
+            const profileTitle = document.getElementById('profile-title');
+            const profileLink = document.getElementById('profile-link');
+            const addProductLink = document.getElementById('add-product-link');
+            const adminInfo = document.getElementById('admin-info');
+            const staffActions = document.getElementById('staff-actions');
+            
+            // Check authentication
+            if (!token) {
+                console.log('No token found, redirecting to login');
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Make sure auth links are hidden and logout is shown
+            const authLinks = document.querySelector('.auth-links');
+            const logoutBtn = document.getElementById('logout-btn');
+            
+            if (authLinks) authLinks.style.display = 'none';
+            if (logoutBtn) logoutBtn.style.display = 'block';
+            
+            // Update UI based on user role
+            if (userRole === 'Admin') {
+                console.log('Setting up Admin profile view');
+                profileTitle.textContent = 'Admin Profile';
+                profileLink.textContent = 'Admin Profile';
+                
+                // Show admin info, hide staff actions
+                if (adminInfo) adminInfo.style.display = 'block';
+                if (staffActions) staffActions.style.display = 'none';
+                
+                // Make sure admin can see all links
+                if (addProductLink) addProductLink.parentElement.style.display = 'block';
+            } else if (userRole === 'Staff') {
+                console.log('Setting up Staff profile view');
+                profileTitle.textContent = 'Staff Profile';
+                profileLink.textContent = 'Staff Profile';
+                document.title = 'Staff Profile | Inventory System';
+                
+                // Show staff actions, hide admin info
+                if (adminInfo) adminInfo.style.display = 'none';
+                if (staffActions) staffActions.style.display = 'block';
+                
+                // Hide admin-only features
+                if (addProductLink) addProductLink.parentElement.style.display = 'none';
+                
+                // Update the staff actions content to be more specific
+                if (staffActions) {
+                    const staffActionsList = staffActions.querySelector('ul');
+                    if (staffActionsList) {
+                        staffActionsList.innerHTML = `
+                            <li>View all products in the inventory</li>
+                            <li>Create sales for available products</li>
+                            <li>View low stock items to inform management</li>
+                            <li>View sales reports</li>
+                        `;
+                    }
+                }
+            } else {
+                console.warn('Unknown user role:', userRole);
+            }
+            
+            // Set up profile picture upload functionality
+            const profilePicUpload = document.getElementById('profile-pic-upload');
+            const displayPicture = document.getElementById('display-picture');
+            
+            if (profilePicUpload && displayPicture) {
+                // Load saved profile picture if available
+                const savedProfilePic = localStorage.getItem('profilePicture');
+                if (savedProfilePic) {
+                    displayPicture.src = savedProfilePic;
+                }
+                
+                profilePicUpload.addEventListener('change', (event) => {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (e) => {
+                            displayPicture.src = e.target.result;
+                            // Save the profile picture to localStorage
+                            localStorage.setItem('profilePicture', e.target.result);
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+            
+            // Set up save profile information functionality
+            const saveProfileBtn = document.getElementById('save-profile');
+            if (saveProfileBtn) {
+                saveProfileBtn.addEventListener('click', () => {
+                    saveProfileData();
+                });
+            }
+            
+            // Set up print document functionality
+            const printDocumentBtn = document.getElementById('print-document');
+            if (printDocumentBtn) {
+                printDocumentBtn.addEventListener('click', () => {
+                    printDocument();
+                });
+            }
+            
+            // Add logout functionality
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', () => {
+                    console.log('Logging out');
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userRole');
+                    localStorage.removeItem('username');
+                    window.location.href = 'login.html';
+                });
+            }
+        });
+        
+        // Function to save profile data to localStorage and update document preview
+        function saveProfileData() {
+            const fullName = document.getElementById('full-name').value;
+            const age = document.getElementById('age').value;
+            const address = document.getElementById('address').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            
+            const profileData = {
+                fullName,
+                age,
+                address,
+                email,
+                phone,
+                savedDate: new Date().toLocaleString()
+            };
+            
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+            
+            // Update the document preview
+            updateDocumentPreview(profileData);
+            
+            alert('Profile information saved successfully!');
+        }
+        
+        // Function to update the document preview
+        function updateDocumentPreview(data) {
+            document.getElementById('doc-full-name').textContent = data.fullName || '-';
+            document.getElementById('doc-age').textContent = data.age || '-';
+            document.getElementById('doc-address').textContent = data.address || '-';
+            document.getElementById('doc-email').textContent = data.email || '-';
+            document.getElementById('doc-phone').textContent = data.phone || '-';
+            document.getElementById('document-date').textContent = data.savedDate || new Date().toLocaleString();
+            
+            // Make the document preview visible
+            document.getElementById('document-preview').style.display = 'block';
+        }
+        
+        // Function to print the document
+        function printDocument() {
+            const documentContent = document.getElementById('document-content');
+            const originalContents = document.body.innerHTML;
+            
+            // Create a new window with just the document content
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write('<html><head><title>Personal Information Document</title>');
+            printWindow.document.write('<link rel="stylesheet" href="../Css/staff-styles.css">');
+            printWindow.document.write('<style>.document-content { box-shadow: none; border: none; } @media print { body { margin: 0; padding: 20px; } }</style>');
+            printWindow.document.write('</head><body>');
+            printWindow.document.write(documentContent.outerHTML);
+            printWindow.document.write('</body></html>');
+            
+            printWindow.document.close();
+            printWindow.focus();
+            
+            // Print after a short delay to ensure styles are loaded
+            setTimeout(() => {
+                printWindow.print();
+                printWindow.close();
+            }, 250);
+        }
+        
+        // Function to load profile data from localStorage
+        function loadProfileData() {
+            const savedData = localStorage.getItem('profileData');
+            if (savedData) {
+                const profileData = JSON.parse(savedData);
+                
+                document.getElementById('full-name').value = profileData.fullName || '';
+                document.getElementById('age').value = profileData.age || '';
+                document.getElementById('address').value = profileData.address || '';
+                document.getElementById('email').value = profileData.email || '';
+                document.getElementById('phone').value = profileData.phone || '';
+                
+                // Update the document preview with saved data
+                updateDocumentPreview(profileData);
+            } else {
+                // Hide document preview if no data is available
+                document.getElementById('document-preview').style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>

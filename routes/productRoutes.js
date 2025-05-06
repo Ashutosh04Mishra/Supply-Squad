@@ -17,6 +17,6 @@ router.post("/", authenticateToken, authorizeRole("Admin"), addProduct);
 router.get("/low-stock", authenticateToken, getLowStockProducts);
 router.delete("/:id", authenticateToken, authorizeRole("Admin"), deleteProduct);
 router.get("/:id", authenticateToken, getProductById);
-router.put("/:id", authenticateToken, authorizeRole("Admin", "Staff"), updateProduct);
+router.put("/:id", authenticateToken, authorizeRole("Admin"), updateProduct);
 
 export default router;

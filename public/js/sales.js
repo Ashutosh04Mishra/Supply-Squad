@@ -70,6 +70,10 @@ async function setupCreateSaleForm() {
     const createSaleForm = document.getElementById("create-sale-form");
     const saleMessage = document.getElementById("sale-message");
     
+    // Check if a product ID was passed in the URL (from staff creating a sale)
+    const urlParams = new URLSearchParams(window.location.search);
+    const preselectedProductId = urlParams.get('productId');
+    
     try {
         // Check if token exists before making the API call
         const token = localStorage.getItem("token");
@@ -99,6 +103,9 @@ async function setupCreateSaleForm() {
             return;
         }
         
+        // Variable to track if we found the preselected product
+        let foundPreselectedProduct = false;
+        
         if (products.length === 0) {
             console.error("No products available - products array is empty");
             saleMessage.textContent = "No products available. Please add products first.";
@@ -119,8 +126,32 @@ async function setupCreateSaleForm() {
             option.textContent = `${product.name} - $${product.price.toFixed(2)}`;
             option.dataset.price = product.price;
             option.dataset.quantity = product.quantity;
+            
+            // If this product matches the preselected ID, select it
+            if (preselectedProductId && product.id.toString() === preselectedProductId) {
+                option.selected = true;
+                foundPreselectedProduct = true;
+                // Trigger product selection to update UI
+                selectedProduct = product;
+                availableStockSpan.textContent = product.quantity;
+                unitPriceSpan.textContent = `$${product.price.toFixed(2)}`;
+                // Enable quantity input
+                quantityInput.disabled = false;
+                quantityInput.max = product.quantity;
+                quantityInput.value = 1; // Set default quantity to 1
+                // Update total price
+                totalPriceSpan.textContent = `$${product.price.toFixed(2)}`;
+            }
+            
             productSelect.appendChild(option);
         });
+        
+        // If we found and selected the preselected product, scroll to the form
+        if (foundPreselectedProduct) {
+            createSaleForm.scrollIntoView({ behavior: 'smooth' });
+            saleMessage.textContent = "Product selected. Please enter quantity and complete the sale.";
+            saleMessage.style.color = "green";
+        }
         
         // Log the number of products loaded
         console.log(`Loaded ${products.length} products into dropdown`);
@@ -143,8 +174,8 @@ async function setupCreateSaleForm() {
                 // Display available stock
                 availableStockSpan.textContent = selectedProduct.quantity;
                 
-                // Calculate unit price (price per item)
-                const unitPrice = selectedProduct.price / selectedProduct.quantity;
+                // Use the product price directly as the unit price
+                const unitPrice = selectedProduct.price;
                 unitPriceSpan.textContent = unitPrice.toFixed(2);
                 
                 // Reset quantity input
@@ -167,8 +198,8 @@ async function setupCreateSaleForm() {
         console.log('Quantity changed, selectedProduct:', selectedProduct);
         if (selectedProduct && quantityInput.value > 0) {
             const quantity = parseInt(quantityInput.value);
-            // Calculate unit price (price per item)
-            const unitPrice = selectedProduct.price / selectedProduct.quantity;
+            // Use the product price directly as the unit price
+            const unitPrice = selectedProduct.price;
             // Calculate total price based on quantity and unit price
             const totalPrice = quantity * unitPrice;
             totalPriceSpan.textContent = totalPrice.toFixed(2);
@@ -214,13 +245,10 @@ async function setupCreateSaleForm() {
         try {
             const token = localStorage.getItem("token");
             
-            // Calculate unit price (price per item)
-            const unitPrice = selectedProduct.price / selectedProduct.quantity;
+            // Use the product price directly as the unit price
+            const unitPrice = selectedProduct.price;
             // Calculate total price for the sale
             const saleTotal = quantity * unitPrice;
-            
-            // Calculate remaining price after sale
-            const remainingPrice = selectedProduct.price - saleTotal;
             
             const response = await fetch("http://localhost:3000/api/sales", {
                 method: "POST",

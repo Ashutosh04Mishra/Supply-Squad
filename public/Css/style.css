@@ -130,7 +130,7 @@ p {
   background: radial-gradient(
     circle at center,
     #644678 0%,    /* Soft light indigo/blue center */
-    #623f89 40%,    /* Deeper blue-violet */
+    #623f89 50%,    /* Deeper blue-violet */
     rgb(63,31,105) 80%,      /* Very dark navy blue */
     rgb(24,11,57) 100%      /* Almost black, still bluish */
   ),
@@ -345,7 +345,7 @@ p {
 }
 
 #login{
-  background: url("/Supply-Squad/assets/loginBackground.jpg") no-repeat center center;
+  background: url("loginBackground.jpg") no-repeat center center;
   overflow: hidden;
   background-size: cover;
 }
@@ -422,7 +422,7 @@ p {
 
 #register{
   /*background: url("https://img.freepik.com/free-vector/abstract-background_23-2148499378.jpg?t=st=1745904449~exp=1745908049~hmac=ffb24d2bc9e0c0dc3e7e595e0af667");*/
-  background: url("/Supply-Squad/assets/loginBackground.jpg") no-repeat center center;
+  background: url("loginBackground.jpg") no-repeat center center;
   overflow: hidden;
   background-size: cover;
 }

@@ -11,8 +11,8 @@ import { authenticateToken, authorizeRole } from "../middleware/authMiddleware.j
 const router = express.Router();
 
 router.post("/", authenticateToken, authorizeRole("Admin", "Staff"), createSale);
-router.get("/", authenticateToken, authorizeRole("Admin"), getSales);
-router.get("/product/:productId", authenticateToken, authorizeRole("Admin"), getSalesByProduct);
-router.get("/user/:userId", authenticateToken, authorizeRole("Admin"), getSalesByUser);
+router.get("/", authenticateToken, authorizeRole("Admin", "Staff"), getSales);
+router.get("/product/:productId", authenticateToken, authorizeRole("Admin", "Staff"), getSalesByProduct);
+router.get("/user/:userId", authenticateToken, authorizeRole("Admin", "Staff"), getSalesByUser);
 
 export default router;

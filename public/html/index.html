@@ -4,6 +4,7 @@
         <meta charset="UTF-8" />
         <title>Dashboard | Inventory System</title>
         <link rel="stylesheet" href="../Css/style.css" />
+        <link rel="stylesheet" href="../Css/staff-styles.css" />
     </head>
     <body>
         <div class="dashboard-layout">
@@ -13,10 +14,11 @@
                     <li><a href="index.html">Dashboard</a></li>
                     <!-- <li><a href="products.html">Products</a></li> -->
                     <li><a href="low-stock.html">Low Stock</a></li>
-                    <li><a href="add-product.html">Add Product</a></li>
+                    <li><a href="add-product.html" id="add-product-link">Add Product</a></li>
                     <li><a href="sales.html">Sales</a></li>
                     <!-- <li><a href="stock-history.html">Stock History</a></li> -->
                     <li><a href="sales-report.html">Sales Report</a></li>
+                    <li><a href="admin-profile.html" id="admin-profile-link">Admin Profile</a></li>
                 </ul>
                 <div class="auth-links">
                     <a href="login.html">Login</a>
@@ -62,5 +64,23 @@
             </main>
         </div>
         <script type="module" src="../js/index.js"></script>
+        <script>
+            // Hide admin-only features based on user role when the page loads
+            document.addEventListener('DOMContentLoaded', () => {
+                const userRole = localStorage.getItem('userRole');
+                const addProductLink = document.getElementById('add-product-link');
+                const adminProfileLink = document.getElementById('admin-profile-link');
+                
+                if (userRole === 'Staff') {
+                    // Staff can't add products, so hide this link
+                    if (addProductLink) addProductLink.parentElement.style.display = 'none';
+                    // Change admin profile link to staff profile
+                    if (adminProfileLink) {
+                        adminProfileLink.textContent = 'Staff Profile';
+                        adminProfileLink.href = 'admin-profile.html'; // Keep the same page for now
+                    }
+                }
+            });
+        </script>
     </body>
 </html>

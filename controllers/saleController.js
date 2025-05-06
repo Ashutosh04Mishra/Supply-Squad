@@ -30,6 +30,7 @@ export const createSale = async (req, res) => {
         }
 
         // Use the totalPrice from the frontend if provided, otherwise calculate it
+        // This ensures we use the product's current price without modifying it
         const salePrice = totalPrice || (product.price * quantity);
         const sale = await Sale.create({
             productId,
@@ -41,8 +42,12 @@ export const createSale = async (req, res) => {
         const oldQuantity = product.quantity;
         const newQuantity = oldQuantity - quantity;
 
-        product.quantity = newQuantity;
-        await product.save();
+        // Update only the quantity field to ensure price remains unchanged
+        // Using fields option to explicitly specify which fields to update
+        await product.update(
+            { quantity: newQuantity },
+            { fields: ['quantity'] }
+        );
 
         await createStockHistoryEntry(productId, userId, oldQuantity, newQuantity, "ORDER");
 
