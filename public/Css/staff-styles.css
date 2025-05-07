@@ -1,0 +1,264 @@
+.staff-note {
+    color: #666;
+    font-style: italic;
+    font-size: 0.9em;
+}
+
+/* Add some additional styling to make it clear that staff can't modify products */
+.low-stock-count {
+    font-weight: bold;
+    color: #e74c3c;
+}
+
+/* Make sure products are visible to staff */
+#product-table tbody tr {
+    opacity: 1 !important; /* Force visibility */
+    transition: opacity 0.3s ease;
+    display: table-row !important; /* Ensure rows are displayed */
+}
+
+/* Staff profile styling */
+.profile-info {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin: 20px;
+}
+
+#user-info {
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.staff-only, .admin-only {
+    display: none; /* Hidden by default, shown via JavaScript */
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-radius: 5px;
+    margin-top: 15px;
+}
+
+.staff-only h3, .admin-only h3 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.staff-only ul, .admin-only ul {
+    margin-left: 20px;
+}
+
+.staff-only li, .admin-only li {
+    margin-bottom: 8px;
+}
+
+/* Profile Picture Styling */
+.profile-header {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.profile-picture-container {
+    margin-right: 30px;
+}
+
+.profile-picture {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid #3498db;
+    margin-bottom: 10px;
+}
+
+.profile-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-picture-upload {
+    text-align: center;
+}
+
+.upload-btn {
+    display: inline-block;
+    background-color: #3498db;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.upload-btn:hover {
+    background-color: #2980b9;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* Personal Information Form Styling */
+.personal-info-form {
+    max-width: 600px;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.form-group input,
+.form-group textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.form-group textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+#save-profile {
+    background-color: #2ecc71;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+#save-profile:hover {
+    background-color: #27ae60;
+}
+
+/* Document Preview Styling */
+.document-preview {
+    margin-top: 30px;
+    border-top: 1px solid #eee;
+    padding-top: 20px;
+}
+
+.document-actions {
+    margin-bottom: 15px;
+    text-align: right;
+}
+
+.print-btn {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    display: inline-flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+
+.print-btn:hover {
+    background-color: #2980b9;
+}
+
+
+
+.document-content {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 25px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    font-family: 'Times New Roman', Times, serif;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.document-header {
+    text-align: center;
+    border-bottom: 2px solid #2c3e50;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+.document-header h2 {
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+/* Staff profile specific styles */
+.staff-document {
+    background-color: #f9f9f9;
+}
+
+.staff-profile-section {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+    margin-bottom: 15px;
+}
+
+.document-date {
+    font-style: italic;
+    color: #7f8c8d;
+}
+
+.document-body {
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+.document-body p {
+    margin-bottom: 12px;
+}
+
+.document-footer {
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    font-size: 0.9em;
+    color: #7f8c8d;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Print styles for document */
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    
+    .document-content,
+    .document-content * {
+        visibility: visible;
+    }
+    
+    .document-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        box-shadow: none !important;
+        border: none !important;
+    }
+    
+    .document-header h2 {
+        font-size: 24px;
+    }
+    
+    .document-body {
+        font-size: 14px;
+    }
+}

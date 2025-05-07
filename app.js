@@ -86,7 +86,7 @@ async function startServer() {
         console.log('Database connected');
 
         // Sync models
-        await sequelize.sync({ force: true });
+        await sequelize.sync({ force: false });
         console.log('Database synchronized');
 
         // Start server

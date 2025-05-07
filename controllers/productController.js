@@ -1,17 +1,17 @@
 // controllers/productController.js
 import Product from "../models/product.js";
-// import StockHistory from "../models/stockHistory.js";
+import StockHistory from "../models/stockHistory.js";
 import { Op } from 'sequelize';
 
-// const createStockHistoryEntry = async (productId, userId, oldQuantity, newQuantity, transactionType) => {
-//     await StockHistory.create({
-//         productId,
-//         userId,
-//         oldQuantity,
-//         newQuantity,
-//         transactionType,
-//     });
-// };
+const createStockHistoryEntry = async (productId, userId, oldQuantity, newQuantity, transactionType) => {
+    await StockHistory.create({
+        productId,
+        userId,
+        oldQuantity,
+        newQuantity,
+        transactionType,
+    });
+};
 
 export const addProduct = async (req, res) => {
     try {
@@ -47,6 +47,17 @@ export const addProduct = async (req, res) => {
         });
 
         console.log('Product created successfully:', product.toJSON());
+        
+        // Create stock history entry for the new product
+        if (Number(quantity) > 0) {
+            await createStockHistoryEntry(
+                product.id,
+                userId,
+                0, // Old quantity was 0
+                Number(quantity),
+                "ADD"
+            );
+        }
 
         res.status(201).json({
             message: 'Product added successfully',
@@ -67,10 +78,8 @@ export const addProduct = async (req, res) => {
 
 export const getProducts = async (req, res) => {
     try {
-        const userId = req.user.id;
-        const products = await Product.findAll({
-            where: { userId }
-        });
+        // Don't filter by userId so staff can see all products
+        const products = await Product.findAll();
         res.json(products);
     } catch (error) {
         console.error("Error fetching products:", error);
@@ -81,20 +90,22 @@ export const getProducts = async (req, res) => {
 export const updateProduct = async (req, res) => {
     try {
         const { id } = req.params;
-        const userId = req.user.id;
         const { name, quantity, price, category, reorder_level } = req.body;
+        const userId = req.user.id;
 
+        // Find the product by ID
         const product = await Product.findOne({
-            where: { 
-                id: id,
-                userId: userId
-            }
+            where: { id: id }
         });
 
         if (!product) {
-            return res.status(404).json({ message: 'Product not found or unauthorized' });
+            return res.status(404).json({ message: 'Product not found' });
         }
 
+        // Store old quantity for stock history
+        const oldQuantity = product.quantity;
+        
+        // Update the product
         await product.update({
             name,
             quantity,
@@ -102,6 +113,17 @@ export const updateProduct = async (req, res) => {
             category,
             reorder_level
         });
+
+        // Create stock history entry if quantity changed
+        if (oldQuantity !== quantity) {
+            await createStockHistoryEntry(
+                id,
+                userId,
+                oldQuantity,
+                quantity,
+                "UPDATE"
+            );
+        }
 
         res.status(200).json({ 
             message: 'Product updated successfully',
@@ -130,17 +152,29 @@ export const deleteProduct = async (req, res) => {
     try {
         const { id } = req.params;
         const userId = req.user.id;
+        // Note: Only admin can access this endpoint as per the route configuration
 
-        const deleted = await Product.destroy({
-            where: { 
-                id: id,
-                userId: userId
-            }
-        });
-
-        if (!deleted) {
-            return res.status(404).json({ message: 'Product not found or unauthorized' });
+        // First find the product to get its quantity for stock history
+        const product = await Product.findByPk(id);
+        
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
         }
+        
+        // Record the quantity before deletion
+        const oldQuantity = product.quantity;
+        
+        // Delete the product
+        await product.destroy();
+        
+        // Create stock history entry for the deleted product
+        await createStockHistoryEntry(
+            id,
+            userId,
+            oldQuantity,
+            0, // New quantity is 0
+            "DELETE"
+        );
 
         res.status(200).json({ message: 'Product deleted successfully' });
     } catch (error) {
@@ -151,13 +185,8 @@ export const deleteProduct = async (req, res) => {
 
 export const getLowStockProducts = async (req, res) => {
     try {
-        const userId = req.user.id;
-        // Find all products where quantity is less than or equal to reorder_level
-        const products = await Product.findAll({
-            where: {
-                userId
-            }
-        });
+        // Don't filter by userId so staff can see all low stock products
+        const products = await Product.findAll();
         
         // Filter products where quantity <= reorder_level
         const lowStockProducts = products.filter(product => {

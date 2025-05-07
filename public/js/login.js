@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 localStorage.setItem("token", data.token);
                 localStorage.setItem("userRole", data.user.role);
                 localStorage.setItem("userId", data.user.id);
+                localStorage.setItem("username", data.user.username);
                 messageContainer.textContent = "Login successful! Redirecting...";
                 messageContainer.style.color = "green";
                 setTimeout(() => {
